@@ -1,0 +1,6 @@
+{
+  "records": [
+    {"id": "m2", "text": "Ada now prefers coffee", "scope": "user:ada", "provenance": "chat:2"},
+    {"id": "m4", "text": "Team uses SQLite", "scope": "team:db", "provenance": "doc:7"}
+  ]
+}

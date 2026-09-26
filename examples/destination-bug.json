@@ -1,0 +1,8 @@
+{
+  "records": [
+    {"id": "m1", "text": "Ada prefers tea", "scope": "user:ada", "provenance": "chat:1"},
+    {"id": "m2", "text": "Ada now prefers coffee", "scope": "user:ada", "provenance": "chat:2"},
+    {"id": "m3", "text": "Delete this secret", "scope": "user:ada", "provenance": "chat:3"},
+    {"id": "m4", "text": "Team uses SQLite", "scope": "user:ada", "provenance": "doc:7"}
+  ]
+}

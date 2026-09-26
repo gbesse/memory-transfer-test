@@ -1,0 +1,9 @@
+{
+  "probes": [
+    {"scope": "user:ada", "term": "tea"},
+    {"scope": "user:ada", "term": "coffee"},
+    {"scope": "user:ada", "term": "secret"},
+    {"scope": "team:db", "term": "SQLite"},
+    {"scope": "user:ada", "term": "SQLite"}
+  ]
+}
