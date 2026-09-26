@@ -2,6 +2,12 @@
 
 [Français](README.md) · [English](README.en.md) · [Español](README.es.md)
 
+## Projets voisins et lacune visée
+
+- [MemMachine](https://github.com/MemMachine/MemMachine) fournit une mémoire persistante pour agents. Un passage vers ou depuis ce type de magasin doit conserver les corrections, suppressions, portées et provenances.
+- [Agent Memory Benchmark](https://github.com/AlekseiMarchenko/agent-memory-benchmark) teste déjà le rappel, les conflits et l'oubli sélectif chez les fournisseurs. Il y a **recouvrement** sur ces comportements. Notre MVP cible le cas différent d'une **migration source → destination**, en comparant deux exports du même état.
+- **Notre angle :** vérifier des invariants de transfert avant bascule. Aucun adaptateur MemMachine ou fournisseur n'est encore inclus.
+
 Vérifie qu'une migration de mémoire d'agent conserve les faits actifs, leurs portées et leurs provenances, sans ressusciter les souvenirs corrigés ou supprimés. Compare deux exports JSON normalisés et exécute des sondes de récupération par portée et terme.
 
 ## Démarrage
@@ -20,6 +26,5 @@ La première commande passe. La seconde sort `2` : elle détecte un fait corrig�
 
 Le MVP compare des exports normalisés, pas les API des fournisseurs ni la qualité de recherche vectorielle. La récupération de sonde est une recherche de terme exact sensible à la portée. Écrivez un adaptateur d'export pour vos deux magasins, puis contrôlez le rapport avant de supprimer la source.
 
-Signaux : [MemMachine](https://github.com/MemMachine/MemMachine) et [agent-memory-benchmark](https://github.com/AlekseiMarchenko/agent-memory-benchmark).
 
 Licence MIT. Adaptateurs de magasins bienvenus.
