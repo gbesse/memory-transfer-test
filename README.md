@@ -22,6 +22,10 @@ python3 -m unittest discover -s tests -v
 
 La première commande passe. La seconde sort `2` : elle détecte un fait corrigé réapparu, un fait supprimé réapparu et une portée modifiée. `--output report.json` enregistre le rapport. Chaque enregistrement a `id`, `text`, `scope`, `provenance`, avec `status` et `supersedes` optionnels. Une sonde a `scope` et `term`.
 
+## Exemple : frontière de portée
+
+`python3 -m examples.scope_boundary` compare une migration correcte à une copie où le même souvenir change de portée. La seconde échoue aussi aux sondes de récupération par équipe. Les exports sont synthétiques ; aucun magasin réel n’est interrogé.
+
 ## Périmètre
 
 Le MVP compare des exports normalisés, pas les API des fournisseurs ni la qualité de recherche vectorielle. La récupération de sonde est une recherche de terme exact sensible à la portée. Écrivez un adaptateur d'export pour vos deux magasins, puis contrôlez le rapport avant de supprimer la source.

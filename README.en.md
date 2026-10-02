@@ -22,6 +22,10 @@ python3 -m unittest discover -s tests -v
 
 The first command passes. The second exits `2`: it catches a corrected fact returning, a deleted fact returning, and a changed scope. `--output report.json` saves the report. Each record has `id`, `text`, `scope`, `provenance`, with optional `status` and `supersedes`. A probe has `scope` and `term`.
 
+## Example: scope boundary
+
+`python3 -m examples.scope_boundary` compares a correct migration with a copy where the same memory changes scope. The latter also fails team-scoped retrieval probes. Exports are synthetic; no live store is queried.
+
 ## Scope
 
 The MVP compares normalized exports, not vendor APIs or vector-search quality. Probe retrieval uses a scope-aware exact-term search. Write export adapters for your two stores, then review the report before deleting the source.
