@@ -1,5 +1,11 @@
 # memory-transfer-test
 
+## Nouvelle vérification : citations après migration
+
+`python3 citation_migration.py demo --lang fr` montre en dix secondes une page qui cite encore `old-1` après transfert vers `new-1` (démo réussie : code 0). Pour vos exports normalisés : `python3 citation_migration.py check source.json destination.json remap.json --lang fr`. Les deux exports contiennent `records: [{id}]` et `pages: [{id, based_on: [id]}]`; `remap.json` associe ancien et nouvel ID. Le contrôle repère les cibles absentes, citations périmées et orphelines. Il ne contacte aucun magasin et dépend de la table de correspondance fournie.
+
+**Projet voisin :** [Hindsight #5298](https://github.com/vectorize-io/hindsight/issues/5298) décrit précisément des citations `based_on` conservant l’ID source après un import fusionné. Ce CLI traite ce symptôme sur des exports ; aucune intégration Hindsight directe n’est incluse.
+
 [Français](README.md) · [English](README.en.md) · [Español](README.es.md)
 
 ## Projets voisins et lacune visée

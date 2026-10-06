@@ -1,5 +1,11 @@
 # memory-transfer-test
 
+## New check: citations after migration
+
+`python3 citation_migration.py demo --lang en` shows a page still citing `old-1` after transfer to `new-1` in ten seconds (successful demo exits 0). For normalized exports: `python3 citation_migration.py check source.json destination.json remap.json --lang en`. Both exports contain `records: [{id}]` and `pages: [{id, based_on: [id]}]`; `remap.json` maps old to new IDs. It detects missing targets, stale citations and orphans. It does not contact a store and relies on your mapping.
+
+**Related project:** [Hindsight #5298](https://github.com/vectorize-io/hindsight/issues/5298) describes `based_on` citations retaining source IDs after merge import. This CLI checks that symptom in exports; there is no direct Hindsight adapter.
+
 [Français](README.md) · [English](README.en.md) · [Español](README.es.md)
 
 ## Related projects and target gap
