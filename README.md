@@ -1,5 +1,20 @@
 # memory-transfer-test
 
+## Nouveau : reçu d’export Hindsight
+
+**« Des observations rappelables ont disparu de mon export mémoire. »** [Hindsight #5419](https://github.com/vectorize-io/hindsight/issues/5419) décrit des observations dont les sources ont disparu et qui ne figurent plus dans `export-bank`. `export_receipt.py` compare les ID d’un instantané source avec les `source_id` de `observations.json` dans une archive de banque Hindsight. Il signale aussi les observations dont des `source_memory_ids` manquent. Il ne modifie aucune banque.
+
+```sh
+python3 export_receipt.py demo --lang fr
+psql -v ON_ERROR_STOP=1 -v bank_id=ma-banque -Atf examples/export-receipt/source-snapshot.sql > source.json
+hindsight-admin export-bank --bank ma-banque --output banque.zip
+python3 export_receipt.py check --source source.json --archive banque.zip --lang fr
+```
+
+La démo synthétique affiche deux observations sources, une exportée, une absente et orpheline. Le contrôle réel lit une archive **de banque entière** et un instantané JSON de la même banque ; exécutez l’export juste après la capture source, sans écriture concurrente si possible. Le SQL en lecture seule suppose que `memory_units` est accessible via votre `search_path`. Gardez l’instantané et l’archive en local : ils contiennent des données de banque. Code 0 : concordance ; 2 : absence ou source orpheline ; 3 : comparaison impossible faute d’ID ; 1 : entrée invalide. Le reçu ne prouve pas la cause de l’omission ni la qualité d’un import ultérieur.
+
+**Projets voisins :** [Hindsight #5419](https://github.com/vectorize-io/hindsight/issues/5419) motive le rapprochement ; [Hindsight](https://github.com/vectorize-io/hindsight) définit le format d’archive. Cet outil indépendant lit le ZIP produit par `export-bank`, sans affiliation ni intégration à une instance active.
+
 ## Nouvelle vérification : citations après migration
 
 `python3 citation_migration.py demo --lang fr` montre en dix secondes une page qui cite encore `old-1` après transfert vers `new-1` (démo réussie : code 0). Pour vos exports normalisés : `python3 citation_migration.py check source.json destination.json remap.json --lang fr`. Les deux exports contiennent `records: [{id}]` et `pages: [{id, based_on: [id]}]`; `remap.json` associe ancien et nouvel ID. Le contrôle repère les cibles absentes, citations périmées et orphelines. Il ne contacte aucun magasin et dépend de la table de correspondance fournie.
