@@ -1,5 +1,20 @@
 # memory-transfer-test
 
+## Nuevo: comprobante de exportación de Hindsight
+
+**« Algunas observaciones recuperables desaparecieron de mi exportación de memoria. »** [Hindsight #5419](https://github.com/vectorize-io/hindsight/issues/5419) describe observaciones con fuentes borradas que se omiten en `export-bank`. `export_receipt.py` compara los ID de una instantánea de origen con los campos `source_id` de `observations.json` en un archivo de banco Hindsight. También señala observaciones cuyos `source_memory_ids` faltan. No modifica ningún banco.
+
+```sh
+python3 export_receipt.py demo --lang es
+psql -v ON_ERROR_STOP=1 -v bank_id=mi-banco -Atf examples/export-receipt/source-snapshot.sql > source.json
+hindsight-admin export-bank --bank mi-banco --output banco.zip
+python3 export_receipt.py check --source source.json --archive banco.zip --lang es
+```
+
+La demo sintética muestra dos observaciones de origen: una exportada y otra ausente con una fuente huérfana. La comprobación real lee un archivo **del banco completo** y una instantánea JSON del mismo banco; exporte justo después de la captura, preferiblemente sin escrituras simultáneas. El SQL de solo lectura supone que `memory_units` está disponible en su `search_path`. Mantenga la instantánea y el archivo en local porque contienen datos del banco. Código 0: coincide; 2: observación ausente o fuente huérfana; 3: comparación imposible sin ID; 1: entrada no válida. El comprobante no demuestra la causa de la omisión ni la calidad de una importación posterior.
+
+**Proyectos relacionados:** [Hindsight #5419](https://github.com/vectorize-io/hindsight/issues/5419) motiva la comparación; [Hindsight](https://github.com/vectorize-io/hindsight) define el formato del archivo. Esta herramienta independiente lee los ZIP de `export-bank`, sin afiliación ni integración con una instancia activa.
+
 ## Nueva comprobación: citas tras una migración
 
 `python3 citation_migration.py demo --lang es` muestra en diez segundos una página que aún cita `old-1` tras migrar a `new-1` (la demo correcta sale con código 0). Para exportaciones normalizadas: `python3 citation_migration.py check source.json destination.json remap.json --lang es`. Ambas exportaciones contienen `records: [{id}]` y `pages: [{id, based_on: [id]}]`; `remap.json` relaciona ID antiguos y nuevos. Detecta destinos ausentes, citas obsoletas y huérfanas. No consulta ningún almacén y depende del mapa proporcionado.
