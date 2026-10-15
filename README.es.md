@@ -53,3 +53,7 @@ El MVP compara exportaciones normalizadas, no API de proveedores ni calidad de b
 
 
 Licencia MIT. Se aceptan adaptadores para almacenes.
+
+## Validar identidades y correcciones antes de comparar
+
+La comparación rechaza ID duplicados, formas no válidas, estados distintos de `active`/`deleted`, ciclos de corrección y correcciones entre ámbitos. El informe incluye `input_valid` y `validation_errors` con códigos/ID, sin texto de recuerdos. Entrada no válida: código `2`; error de lectura: `1`. `--lang fr|en|es` traduce los diagnósticos. Una referencia `supersedes` ausente sigue permitida en exportaciones compactadas; su origen no queda demostrado. Una corrección eliminada sigue ocultando el hecho antiguo para evitar su reaparición. Estas reglas se aplican a exportaciones normalizadas, no al control de acceso del proveedor.

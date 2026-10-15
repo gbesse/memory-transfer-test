@@ -53,3 +53,7 @@ Le MVP compare des exports normalisés, pas les API des fournisseurs ni la quali
 
 
 Licence MIT. Adaptateurs de magasins bienvenus.
+
+## Valider les identités et corrections avant comparaison
+
+La comparaison refuse désormais les ID dupliqués, formes invalides, statuts autres que `active`/`deleted`, corrections circulaires et corrections entre portées. Le rapport contient `input_valid` et des `validation_errors` avec codes/ID, sans texte des souvenirs. Une entrée invalide sort avec `2` ; une erreur de lecture avec `1`. `--lang fr|en|es` traduit les messages de diagnostic. Une cible `supersedes` absente reste admise pour les exports compactés ; son origine n’est alors pas prouvée. Une correction supprimée continue de masquer le fait ancien pour éviter sa résurrection. Ces règles concernent les exports normalisés, pas le contrôle d’accès du fournisseur.
