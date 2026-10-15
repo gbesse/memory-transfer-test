@@ -53,3 +53,7 @@ The MVP compares normalized exports, not vendor APIs or vector-search quality. P
 
 
 MIT licensed. Store adapters are welcome.
+
+## Validate identities and corrections before comparison
+
+Comparison now refuses duplicate IDs, invalid shapes, statuses other than `active`/`deleted`, correction cycles and corrections across scopes. Reports include `input_valid` and `validation_errors` with codes/IDs, without memory text. Invalid input exits `2`; a read error exits `1`. `--lang fr|en|es` translates diagnostic messages. A missing `supersedes` target remains allowed for compacted exports; its origin cannot then be proven. A deleted correction still suppresses the old fact to prevent resurrection. These rules concern normalized exports, not provider access control.
